@@ -83,7 +83,7 @@ Target flagged skills (INFO/WARN). Skip if < 200 words or no clear reduction. Ot
 - **All skills:** Glob `references/**/*.md` + `<skill-dir>/references/**/*.md`
 - **Single skill:** Glob `<skill-dir>/references/**/*.md`
 
-See [tightening guidelines](references/skill-tightening-guidelines.md).
+**Principles:** Cut explanatory prose, keep operational instructions. Use tables/lists over paragraphs. Preserve Quick Reference, Common Mistakes, and critical decision points. Don't change section structure.
 
 ## Phase 4: Simplify (agent-driven)
 
