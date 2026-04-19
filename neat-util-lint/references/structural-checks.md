@@ -14,7 +14,7 @@
 
 ## Check 4: README completeness
 
-*(Skip for single-skill mode)* Ensure repo-level README is up-to-date, concise, includes all skills and important details without losing keywords.
+*(Skip for single-skill mode)* Ensure single repo-level README exists and documents all skills. Skill-level READMEs are not required.
 
 ## Check 5: Name format
 

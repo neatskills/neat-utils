@@ -68,7 +68,7 @@ Automated checks returning FAIL, WARN, or PASS. Glob `**/SKILL.md`.
 
 **Single-skill mode:** Match `name:` field (FAIL if not found). Run checks 1-2, 5-10 (skip 3-4).
 
-**Check 4 (README accuracy and conciseness):** Agent ensures repo-level README is up-to-date, concise, includes all skills and important details without losing keywords.
+**Check 4 (README completeness):** Agent ensures single repo-level README exists and documents all skills. Skill-level READMEs are not required.
 
 See [structural checks reference](references/structural-checks.md). FAIL blocks Phase 3. WARN non-blocking.
 
