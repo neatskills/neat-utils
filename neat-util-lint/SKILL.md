@@ -50,7 +50,9 @@ Catches interdependency issues manual review misses.
 
 *Skip for single-skill mode.*
 
-Ask user: "Check logic flow and cross-skill consistency? [y/n]"
+Ask user: "Check logic flow and cross-skill consistency? [y/n/stop]"
+
+If user responds "stop", exit immediately without proceeding to remaining phases.
 
 ### Checks
 
@@ -74,7 +76,9 @@ See [structural checks reference](references/structural-checks.md). FAIL blocks 
 
 ## Phase 3: Tighten (agent-driven)
 
-Ask user: "Tighten flagged SKILL.md files and references? [y/n]"
+Ask user: "Tighten flagged SKILL.md files and references? [y/n/stop]"
+
+If user responds "stop", exit immediately without proceeding to remaining phases.
 
 Target flagged skills (INFO/WARN). Skip if < 200 words or no clear reduction. Otherwise condense 30-50%, show word count, apply with approval.
 
@@ -87,7 +91,9 @@ Target flagged skills (INFO/WARN). Skip if < 200 words or no clear reduction. Ot
 
 ## Phase 4: Simplify (agent-driven)
 
-Ask user: "Simplify script files? [y/n]"
+Ask user: "Simplify script files? [y/n/stop]"
+
+If user responds "stop", exit immediately without proceeding to remaining phases.
 
 Glob `scripts/**/*`, `/simplify` each, apply with approval.
 
@@ -97,7 +103,9 @@ Run `npx markdownlint-cli2` on `"**/*.md"` or `"path/to/skill/**/*.md"`. Fix, re
 
 ## Phase 6: Project Health (automated)
 
-Ask user: "Check project dependencies? [y/n]"
+Ask user: "Check project dependencies? [y/n/stop]"
+
+If user responds "stop", exit immediately.
 
 Quick project infrastructure checks. Skip if user declines or no package.json.
 
@@ -131,3 +139,4 @@ See [process diagrams](references/lint-process-diagrams.md).
 | Infinite markdownlint loop | Max 3 iterations |
 | User declines all phases | Workflow exits |
 | User cancels Phase 1 fixes | Stop, get confirmation |
+| Proceeding after "stop" | Exit immediately |
