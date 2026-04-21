@@ -62,7 +62,13 @@ If user responds "stop", exit immediately without proceeding to remaining phases
 4. **Edge case coverage:** Handling when optional inputs missing
 5. **Ripple effects:** `git diff HEAD~5 --name-only` (skip if not git repo or < 5 commits)
 
-Present findings with severity (ERROR, WARNING, INFO), recommend SKILL.md to fix. If issues: fix, re-run, max 3 iterations.
+Present findings with severity (ERROR, WARNING, INFO). User options:
+1. **Fix all** → Fix everything, re-run Phase 1, repeat cycle
+2. **Fix some, mark others as non-issues** → Fix selected, suppress non-issues (comment or ignore pattern), re-run Phase 1, repeat cycle
+3. **Fix some, leave others** → Fix selected only, proceed to Phase 2
+4. **Skip** → Proceed to Phase 2
+
+Repeat cycle (fix → re-check → present) only for options 1-2. For option 2, ensure suppressed findings don't appear in subsequent iterations.
 
 ## Phase 2: Structure (automated + agent review)
 
@@ -72,7 +78,13 @@ Automated checks returning FAIL, WARN, or PASS. Glob `**/SKILL.md`.
 
 **Check 4 (README completeness):** Agent ensures single repo-level README exists and documents all skills. Skill-level READMEs are not required.
 
-See [structural checks reference](references/structural-checks.md). FAIL blocks Phase 3. WARN non-blocking.
+See [structural checks reference](references/structural-checks.md). FAIL blocks Phase 3. Present FAIL and WARN items. User options:
+1. **Fix all** → Fix everything, re-run Phase 2, repeat cycle
+2. **Fix some, mark others as non-issues** → Fix selected, document why others are acceptable, re-run Phase 2, repeat cycle
+3. **Fix some, leave others** → Fix selected only, proceed to Phase 3 (blocks if FAIL remains)
+4. **Skip** → Proceed to Phase 3 (blocks if FAIL remains)
+
+Repeat cycle only for options 1-2. WARN non-blocking.
 
 ## Phase 3: Tighten (agent-driven)
 
@@ -99,7 +111,13 @@ Glob `scripts/**/*`, `/simplify` each, apply with approval.
 
 ## Phase 5: Markdown (automated fix loop)
 
-Run `npx markdownlint-cli2` on `"**/*.md"` or `"path/to/skill/**/*.md"`. Fix, re-run until clean (max 3 iterations).
+Run `npx markdownlint-cli2` on `"**/*.md"` or `"path/to/skill/**/*.md"`. Present warnings. User options:
+1. **Fix all** → Fix everything, re-run Phase 5, repeat cycle
+2. **Fix some, mark others as non-issues** → Fix selected, add to `.markdownlint-cli2.jsonc` ignore rules, re-run Phase 5, repeat cycle
+3. **Fix some, leave others** → Fix selected only, proceed to Phase 6
+4. **Skip** → Proceed to Phase 6
+
+Repeat cycle only for options 1-2.
 
 ## Phase 6: Project Health (automated)
 
