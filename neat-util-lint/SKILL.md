@@ -46,13 +46,24 @@ Catches interdependency issues manual review misses.
 | 5. Markdown | markdownlint fix loop (max 3) | No | Skill dir only |
 | 6. Project Health | Dependencies, security, lockfiles | No | Always runs |
 
+## User Options for Fix Cycles
+
+Phases 1, 2, and 5 use this pattern after presenting findings:
+
+1. **Fix all** → Fix everything, re-run phase, repeat cycle
+2. **Fix some + suppress non-issues** → Fix selected, suppress false positives, re-run phase, repeat cycle
+3. **Fix some only** → Fix selected, proceed to next phase
+4. **Skip** → Proceed to next phase
+
+Repeat occurs only for options 1-2. Suppression methods: comments, ignore patterns, config files.
+
+**Stop behavior**: If user responds "stop" to any phase prompt, exit immediately without proceeding to remaining phases.
+
 ## Phase 1: Logic Flow (agent-driven)
 
 *Skip for single-skill mode.*
 
 Ask user: "Check logic flow and cross-skill consistency? [y/n/stop]"
-
-If user responds "stop", exit immediately without proceeding to remaining phases.
 
 ### Checks
 
@@ -62,13 +73,7 @@ If user responds "stop", exit immediately without proceeding to remaining phases
 4. **Edge case coverage:** Handling when optional inputs missing
 5. **Ripple effects:** `git diff HEAD~5 --name-only` (skip if not git repo or < 5 commits)
 
-Present findings with severity (ERROR, WARNING, INFO). User options:
-1. **Fix all** → Fix everything, re-run Phase 1, repeat cycle
-2. **Fix some, mark others as non-issues** → Fix selected, suppress non-issues (comment or ignore pattern), re-run Phase 1, repeat cycle
-3. **Fix some, leave others** → Fix selected only, proceed to Phase 2
-4. **Skip** → Proceed to Phase 2
-
-Repeat cycle (fix → re-check → present) only for options 1-2. For option 2, ensure suppressed findings don't appear in subsequent iterations.
+Present findings with severity (ERROR, WARNING, INFO). Apply [user options pattern](#user-options-for-fix-cycles).
 
 ## Phase 2: Structure (automated + agent review)
 
@@ -78,21 +83,13 @@ Automated checks returning FAIL, WARN, or PASS. Glob `**/SKILL.md`.
 
 **Check 4 (README completeness):** Agent ensures single repo-level README exists and documents all skills. Skill-level READMEs are not required.
 
-See [structural checks reference](references/structural-checks.md). FAIL blocks Phase 3. Present FAIL and WARN items. User options:
-1. **Fix all** → Fix everything, re-run Phase 2, repeat cycle
-2. **Fix some, mark others as non-issues** → Fix selected, document why others are acceptable, re-run Phase 2, repeat cycle
-3. **Fix some, leave others** → Fix selected only, proceed to Phase 3 (blocks if FAIL remains)
-4. **Skip** → Proceed to Phase 3 (blocks if FAIL remains)
-
-Repeat cycle only for options 1-2. WARN non-blocking.
+See [structural checks reference](references/structural-checks.md). FAIL blocks Phase 3. Present FAIL and WARN items. Apply [user options pattern](#user-options-for-fix-cycles). WARN non-blocking.
 
 ## Phase 3: Tighten (agent-driven)
 
 Ask user: "Tighten flagged SKILL.md files and references? [y/n/stop]"
 
-If user responds "stop", exit immediately without proceeding to remaining phases.
-
-Target flagged skills (INFO/WARN). Skip if < 200 words or no clear reduction. Otherwise condense 30-50%, show word count, apply with approval.
+Target flagged skills (INFO/WARN from Phase 2). Requirements: > 200 words AND clear reduction opportunity. Condense 30-50%, show word count, apply with approval.
 
 **References:**
 
@@ -105,27 +102,17 @@ Target flagged skills (INFO/WARN). Skip if < 200 words or no clear reduction. Ot
 
 Ask user: "Simplify script files? [y/n/stop]"
 
-If user responds "stop", exit immediately without proceeding to remaining phases.
-
 Glob `scripts/**/*`, `/simplify` each, apply with approval.
 
 ## Phase 5: Markdown (automated fix loop)
 
-Run `npx markdownlint-cli2` on `"**/*.md"` or `"path/to/skill/**/*.md"`. Present warnings. User options:
-1. **Fix all** → Fix everything, re-run Phase 5, repeat cycle
-2. **Fix some, mark others as non-issues** → Fix selected, add to `.markdownlint-cli2.jsonc` ignore rules, re-run Phase 5, repeat cycle
-3. **Fix some, leave others** → Fix selected only, proceed to Phase 6
-4. **Skip** → Proceed to Phase 6
-
-Repeat cycle only for options 1-2.
+Run `npx markdownlint-cli2` on `"**/*.md"` or `"path/to/skill/**/*.md"`. Present warnings. Apply [user options pattern](#user-options-for-fix-cycles).
 
 ## Phase 6: Project Health (automated)
 
 Ask user: "Check project dependencies? [y/n/stop]"
 
-If user responds "stop", exit immediately.
-
-Quick project infrastructure checks. Skip if user declines or no package.json.
+Quick project infrastructure checks. Requires package.json.
 
 ### Health Checks
 
