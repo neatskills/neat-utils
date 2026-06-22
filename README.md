@@ -4,6 +4,12 @@ Claude Code custom utility skills.
 
 ## Skills
 
+**neat-util-debugging** — AI-powered debugging with rapid iteration. Generates ranked hypotheses, tests in isolated worktrees, and requires user confirmation before any code changes.
+
+- Requires user alignment before coding
+- Uses worktrees for isolated testing
+- Integrates with `systematic-debugging` for deep investigation
+
 **neat-util-pdf** — Interactive PDF generator with conversational wizard. Guides through purpose, content, and style selection, then renders to PDF using Playwright.
 
 - Prerequisites: Node.js, Playwright with Chromium
@@ -31,10 +37,10 @@ Claude Code custom utility skills.
 
 ```bash
 # Install
-./scripts/install.sh pdf insights lint vet
+./scripts/install.sh debugging pdf insights lint vet
 
 # Uninstall
-./scripts/uninstall.sh pdf insights lint vet
+./scripts/uninstall.sh debugging pdf insights lint vet
 ```
 
 ## Conventions
