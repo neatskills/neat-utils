@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "gray-matter": "^4.0.3",
     "playwright": "^1.58.2"
   }
 }
