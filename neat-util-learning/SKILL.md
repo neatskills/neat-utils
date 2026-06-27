@@ -110,3 +110,46 @@ Want to review before continuing? [y/n/menu]"
 If user selects [y]: run Discover review for each concept
 If user selects [n]: continue with next learning activity
 If user selects [menu]: show full map, let user navigate
+
+## Activity 1: Explore
+
+**Purpose:** Build or expand the concept map
+
+### Initial Map Building
+
+After domain confirmation:
+
+AI: "For [goal], you'll need these core concepts:
+
+[Call scripts/map-builder.js buildInitialMap(topic, goal, domain)]
+
+[Display sections and concepts]
+
+**Foundation:**
+- [Concept A] - [Description]
+
+**Workflow:**
+- [Concept B] - [Description]
+- [Concept C] - [Description]
+
+I've focused your map on [goal]. We can add advanced topics later.
+
+Let's start with [first concept]."
+
+[Update state with sections, save map.md]
+[Run Discover activity on first concept]
+
+### Adding Concepts
+
+User: "What's [X]?"
+
+AI: [If X not in map]
+"[X] is [brief explanation - 1-2 sentences].
+
+Should I add [X] to your map? [y/n]"
+
+If yes:
+- Determine section (Foundation/Core/Advanced)
+- Set dependencies
+- Add to state at Level 0
+- Run Explore activity (mark as added, note relationships)
