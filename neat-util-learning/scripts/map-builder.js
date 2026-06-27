@@ -17,7 +17,7 @@ const mapTemplates = {
           ]
         },
         {
-          name: 'Workflow',
+          name: 'Core',
           concepts: [
             {
               name: 'Deployment',
@@ -34,18 +34,13 @@ const mapTemplates = {
                 requires: ['pod'],
                 enables: ['ingress']
               }
-            }
-          ]
-        },
-        {
-          name: 'Configuration',
-          concepts: [
+            },
             { name: 'ConfigMap', description: 'Non-sensitive configuration', dependencies: { requires: ['pod'], enables: [] } },
             { name: 'Secret', description: 'Sensitive data', dependencies: { requires: ['pod'], enables: [] } }
           ]
         },
         {
-          name: 'Storage',
+          name: 'Advanced',
           concepts: [
             { name: 'Volume', description: 'Persistent data', dependencies: { requires: ['pod'], enables: ['persistent-volume'] } }
           ]
@@ -55,7 +50,7 @@ const mapTemplates = {
     'cka certification': {
       sections: [
         {
-          name: 'Core Concepts',
+          name: 'Foundation',
           concepts: [
             { name: 'Pod', description: 'Basic unit', dependencies: { requires: [], enables: ['deployment'] } },
             { name: 'Namespace', description: 'Isolation', dependencies: { requires: [], enables: [] } },
@@ -63,35 +58,25 @@ const mapTemplates = {
           ]
         },
         {
-          name: 'Workloads',
+          name: 'Core',
           concepts: [
             { name: 'Deployment', description: 'Stateless apps', dependencies: { requires: ['pod'], enables: [] } },
             { name: 'StatefulSet', description: 'Stateful apps', dependencies: { requires: ['pod'], enables: [] } },
             { name: 'DaemonSet', description: 'One per node', dependencies: { requires: ['pod'], enables: [] } },
-            { name: 'Job', description: 'One-time tasks', dependencies: { requires: ['pod'], enables: [] } }
-          ]
-        },
-        {
-          name: 'Networking',
-          concepts: [
+            { name: 'Job', description: 'One-time tasks', dependencies: { requires: ['pod'], enables: [] } },
             { name: 'Service', description: 'Network abstraction', dependencies: { requires: ['pod'], enables: [] } },
             { name: 'Ingress', description: 'HTTP routing', dependencies: { requires: ['service'], enables: [] } },
-            { name: 'NetworkPolicy', description: 'Firewall rules', dependencies: { requires: ['pod'], enables: [] } }
+            { name: 'NetworkPolicy', description: 'Firewall rules', dependencies: { requires: ['pod'], enables: [] } },
+            { name: 'ConfigMap', description: 'Config data', dependencies: { requires: [], enables: [] } },
+            { name: 'Secret', description: 'Sensitive data', dependencies: { requires: [], enables: [] } }
           ]
         },
         {
-          name: 'Storage',
+          name: 'Advanced',
           concepts: [
             { name: 'Volume', description: 'Pod storage', dependencies: { requires: ['pod'], enables: [] } },
             { name: 'PersistentVolume', description: 'Cluster storage', dependencies: { requires: ['volume'], enables: [] } },
             { name: 'PersistentVolumeClaim', description: 'Storage request', dependencies: { requires: ['persistentvolume'], enables: [] } }
-          ]
-        },
-        {
-          name: 'Configuration',
-          concepts: [
-            { name: 'ConfigMap', description: 'Config data', dependencies: { requires: [], enables: [] } },
-            { name: 'Secret', description: 'Sensitive data', dependencies: { requires: [], enables: [] } }
           ]
         }
       ]
@@ -108,7 +93,7 @@ const mapTemplates = {
           ]
         },
         {
-          name: 'Tactics',
+          name: 'Core',
           concepts: [
             { name: 'Anchoring', description: 'First offer sets range', dependencies: { requires: ['batna'], enables: [] } },
             { name: 'Mirroring', description: 'Repeat last words', dependencies: { requires: [], enables: [] } },
@@ -116,7 +101,7 @@ const mapTemplates = {
           ]
         },
         {
-          name: 'Strategy',
+          name: 'Advanced',
           concepts: [
             { name: 'Multi-issue negotiation', description: 'Trade across multiple factors', dependencies: { requires: ['batna'], enables: [] } },
             { name: 'Time pressure', description: 'Using deadlines', dependencies: { requires: [], enables: [] } }

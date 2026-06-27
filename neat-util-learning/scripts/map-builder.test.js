@@ -89,6 +89,31 @@ describe('Map Builder', () => {
     // CKA should have more concepts than deploy-focused map
     expect(certConcepts.length).toBeGreaterThan(deployConcepts.length);
   });
+
+  test('all templates use standard section names: Foundation, Core, Advanced', () => {
+    const standardSections = ['Foundation', 'Core', 'Advanced'];
+
+    // Test Kubernetes templates
+    const k8sDeploy = buildInitialMap('Kubernetes', 'Deploy applications', 'technical');
+    const k8sCert = buildInitialMap('Kubernetes', 'CKA certification', 'technical');
+
+    // Test Negotiation template
+    const negotiation = buildInitialMap('Negotiation', 'Salary negotiation', 'social');
+
+    // Test generic fallback
+    const generic = buildInitialMap('Unknown', 'Unknown goal', 'technical');
+
+    const templates = [k8sDeploy, k8sCert, negotiation, generic];
+
+    templates.forEach((template, idx) => {
+      const sectionNames = template.sections.map(s => s.name);
+      sectionNames.forEach(name => {
+        if (!standardSections.includes(name)) {
+          throw new Error(`Template ${idx} has non-standard section: "${name}". Only Foundation, Core, Advanced allowed.`);
+        }
+      });
+    });
+  });
 });
 
 // Summary

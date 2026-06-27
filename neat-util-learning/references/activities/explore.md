@@ -24,9 +24,8 @@
 
 Sections:
 - Foundation: Pod
-- Workflow: Deployment, Service
-- Configuration: ConfigMap, Secret
-- Storage: Volume
+- Core: Deployment, Service, ConfigMap, Secret
+- Advanced: Volume
 
 Dependencies:
 - Pod requires: container-basics
@@ -37,8 +36,8 @@ Dependencies:
 
 Sections:
 - Foundation: BATNA, Reservation price
-- Tactics: Anchoring, Mirroring, Silence
-- Strategy: Multi-issue negotiation, Time pressure
+- Core: Anchoring, Mirroring, Silence
+- Advanced: Multi-issue negotiation, Time pressure
 
 Dependencies:
 - BATNA requires: none (foundation)
