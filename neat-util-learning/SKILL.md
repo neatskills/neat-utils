@@ -153,3 +153,103 @@ If yes:
 - Set dependencies
 - Add to state at Level 0
 - Run Explore activity (mark as added, note relationships)
+
+## Activity 2: Discover
+
+**Purpose:** Learn through questions and predictions, not explanations
+
+See `references/activities/discover.md` for complete patterns.
+
+### Question-Based Learning
+
+**Flow:**
+1. Ask predictive question about the concept
+2. User guesses/predicts
+3. Confirm or clarify (don't explain everything yet)
+4. Track performance: correct/incorrect, hints needed, confusion patterns
+5. Repeat for 5 questions total
+
+**Example (Kubernetes - Pod):**
+
+```
+AI: "Before I explain Pods, let me ask:
+     If a container crashes, what should Kubernetes do?
+     
+     a) Restart it automatically
+     b) Leave it crashed
+     c) Delete the whole application
+     d) Alert but don't touch it"
+
+User: "a"
+
+AI: [Track: correct, no hints]
+    "Exactly! Kubernetes handles failures automatically.
+     
+     Next: What if you need 3 identical copies running?"
+
+User: "Make 3 Pods?"
+
+AI: [Track: partially correct, needs hint]
+    "Close! You COULD manually create 3, but what if one crashes?
+     You'd manually replace it. Any ideas for automating this?"
+
+User: "Some kind of manager?"
+
+AI: [Track: correct with hint]
+    "Perfect! That's why Deployments exist."
+```
+
+### Performance Tracking
+
+After 5 questions, record signals in state:
+
+**Strong performance (4-5 correct, 0-1 hints):**
+```markdown
+#### Discover ✓
+questions:
+  correct: 5
+  total: 5
+  date: [ISO8601]
+hints_needed: 0
+signals:
+  confusion: []
+  strengths: [lifecycle, restart-policy, container-relationship]
+
+Strong understanding. Ready for Name activity.
+```
+
+**Weak performance (2-3 correct, 2+ hints):**
+```markdown
+#### Discover →
+questions:
+  correct: 2
+  total: 5
+  date: [ISO8601]
+hints_needed: 3
+signals:
+  confusion:
+    - pattern: "Mixing up Deployment vs ReplicaSet"
+    - specific: "What creates ReplicaSet?" (wrong 2x)
+  needs: "More discovery on Deployment internals"
+
+Confusion detected. Need reinforcement before Practice.
+```
+
+### Readiness Gates
+
+**Move to Name activity when:**
+- 4/5+ questions correct (80%+ understanding)
+- Minimal hints (0-1 per question)
+- No major confusion patterns
+
+**Stay in Discover if:**
+- <3/5 correct (need more questions)
+- Confusion pattern detected
+- Many hints needed (>2 per question)
+
+### Domain Adaptation
+
+**Technical domains:** Predictive questions ("What happens if...?")
+**Soft skills:** Scenario-based ("In this situation, what would you do?")
+**Business:** Estimation ("Calculate/predict this value")
+**Theoretical:** Pattern recognition ("Which do you remember? Why?")
