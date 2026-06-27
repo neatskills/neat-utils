@@ -33,14 +33,22 @@ Claude Code custom utility skills.
 - Adapts depth to idea maturity (Concept/Early/Validated) and urgency (High/Medium/Low)
 - Output: Structured business plan document
 
+**neat-util-learning** — AI-guided learning system for mastering any domain through discovery-based learning. Builds customized concept maps, tracks progress across sessions, uses spaced repetition.
+
+- Learning activities: Explore (map building) → Discover (questions) → Name (terminology) → Practice (exercises) → Calibrate (expert thinking)
+- Supports 4 domains: technical, soft skills, business, theoretical
+- Spaced repetition prevents forgetting (2-60 day intervals)
+- Multi-session state tracking in Markdown + YAML frontmatter
+- Output: `docs/neat_util_learning/<topic>/map.md`
+
 ## Install / Uninstall
 
 ```bash
 # Install
-./scripts/install.sh debugging pdf insights lint vet
+./scripts/install.sh debugging pdf insights lint vet learning
 
 # Uninstall
-./scripts/uninstall.sh debugging pdf insights lint vet
+./scripts/uninstall.sh debugging pdf insights lint vet learning
 ```
 
 ## Conventions
