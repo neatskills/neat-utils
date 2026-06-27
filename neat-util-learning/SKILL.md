@@ -253,3 +253,75 @@ Confusion detected. Need reinforcement before Practice.
 **Soft skills:** Scenario-based ("In this situation, what would you do?")
 **Business:** Estimation ("Calculate/predict this value")
 **Theoretical:** Pattern recognition ("Which do you remember? Why?")
+
+## Activity 3: Name
+
+**Purpose:** Introduce terminology AFTER understanding exists
+
+See `references/activities/name.md` for complete patterns.
+
+### Understanding Before Vocabulary
+
+**Order matters:**
+1. Discover builds understanding (WHY it exists, WHAT it does)
+2. Name connects vocabulary to that understanding
+3. User knows both the concept AND the terms
+
+### Format
+
+```
+AI: "You now understand:
+     - [Key insight 1 from Discover]
+     - [Key insight 2 from Discover]
+     - [Key insight 3 from Discover]
+     
+     This is called **[Term]**.
+     
+     One sentence: [Concise definition]
+     
+     Key vocabulary:
+     - [Term 1]: [Brief explanation]
+     - [Term 2]: [Brief explanation]
+     - [Term 3]: [Brief explanation]
+     
+     When you see '[Term]' in docs, you now know what it means."
+```
+
+### Example (Kubernetes - Pod)
+
+```
+AI: "You now understand:
+     - Containers can crash → need auto-restart
+     - Kubernetes wraps containers in a management layer
+     - This layer handles lifecycle
+     
+     This wrapper is called a **Pod**.
+     
+     One sentence: A Pod is the smallest deployable unit in Kubernetes.
+     
+     Key vocabulary:
+     - Pod spec: YAML definition
+     - Pod lifecycle: birth → running → termination  
+     - Pod status: current state (Running, Failed, Pending)
+     - Container restart policy: Always, OnFailure, Never
+     
+     When you see 'Pod' in Kubernetes docs, you know it's that management wrapper."
+```
+
+### State Update
+
+```markdown
+#### Name ✓
+vocabulary_introduced: [ISO8601]
+terms:
+  - Pod
+  - Pod spec
+  - Pod lifecycle
+  - Pod status
+
+Terminology introduced after understanding.
+```
+
+**Level update:** Concept moves to Level 2 (can explain concepts)
+
+**Next:** User ready for Practice (knows terminology)
