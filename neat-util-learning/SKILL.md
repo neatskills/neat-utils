@@ -325,3 +325,153 @@ Terminology introduced after understanding.
 **Level update:** Concept moves to Level 2 (can explain concepts)
 
 **Next:** User ready for Practice (knows terminology)
+
+## Activity 4: Practice
+
+**Purpose:** Apply knowledge through domain-appropriate exercises
+
+See `references/activities/practice.md` for complete patterns.
+
+### Readiness Gates
+
+**Practice unlocks when:**
+- ✅ Discover: 4/5+ questions correct
+- ✅ Name: Vocabulary introduced
+- ✅ Prerequisites: All "requires" dependencies at Level 3+
+
+### Domain Adaptation
+
+| Domain | Exercise Type | Example |
+|--------|---------------|---------|
+| **Technical** | Code/config writing | "Write a Pod manifest" |
+| **Soft Skills** | Role-play scenarios | "Practice salary negotiation" |
+| **Business** | Case studies, models | "Build DCF model" |
+| **Theoretical** | Analysis, pattern ID | "Identify biases in scenarios" |
+
+### Performance Tracking
+
+Track for each exercise:
+
+- **Completion:** Finished or not
+- **Errors:** Count and type (conceptual vs syntax)
+- **Independence:** Hints needed or not
+- **Error patterns:** What kind of mistakes
+
+**Example (Kubernetes - Pod):**
+
+```
+AI: "Let's practice creating a Pod.
+     
+     Task: Create a Pod named 'my-app' running the nginx image.
+     Try writing the YAML manifest."
+
+User: [writes YAML with errors]
+
+AI: "I see 2 issues. Which prevents the Pod from starting?
+     a) apiVersion: v2 (should be v1)
+     b) replicas: 3 (Pods don't have a replicas field)"
+
+User: "b"
+
+AI: [Track: identified conceptual error correctly]
+    "Correct! Pods don't manage replicas - that's Deployment's job.
+     Fix both and try again."
+```
+
+### State Update
+
+**After successful practice:**
+```markdown
+#### Practice ✓
+date: [ISO8601]
+independence: true
+exercises:
+  - name: Write Pod manifest
+    status: complete
+    errors: 0
+
+Can work independently. All exercises completed.
+```
+
+**Level progression:** Practice complete → Level 4 (can solve unfamiliar problems)
+
+**Next:** User ready for Calibrate (expert thinking)
+
+## Activity 5: Calibrate
+
+**Purpose:** Teach expert thinking patterns - when rules break, tradeoffs, common mistakes
+
+See `references/activities/calibrate.md` for complete patterns.
+
+### Expert Thinking: 3-Question Pattern
+
+Ask 3 types of questions, user must pass 2/3:
+
+| Question Type | Purpose | Example |
+|---------------|---------|---------|
+| **Negative case** | When NOT to use this | "When would Deployment be WRONG?" |
+| **Tradeoff** | X vs Y - when each? | "Deployment vs StatefulSet - when each?" |
+| **Common mistake** | What do beginners mess up? | "What error do beginners make?" |
+
+### Pass Criteria
+
+**Pass 2/3 questions:**
+- Concept moves to Level 5-7 (expert thinking)
+- Concept marked as "mastered"
+- Ready for spaced repetition review
+
+**Pass 0-1/3:**
+- Stay at Level 4
+- More calibration or Practice needed
+
+**Example (Kubernetes - Deployment):**
+
+```
+AI: "You can now create Deployments. Let's calibrate.
+     
+     Q1 (Negative case): When would Deployment be WRONG?"
+
+User: "For one-time tasks like database migrations"
+
+AI: [Track: correct, 1/3]
+    "Exactly! Use a Job instead.
+     
+     Q2 (Tradeoff): Deployment vs StatefulSet - when each?"
+
+User: "Deployment for stateless, StatefulSet for databases"
+
+AI: [Track: correct, 2/3]
+    "Right!
+     
+     Q3 (Common mistake): What do beginners mess up?"
+
+User: "Setting replicas=1 thinking it's redundant"
+
+AI: [Track: correct, 3/3]
+    "Perfect! Replicas=1 gives restart, not redundancy.
+     
+     [Passed 3/3 - expert thinking demonstrated]
+     
+     Deployment: Mastered ✓"
+```
+
+### State Update
+
+**Passed calibration:**
+```markdown
+#### Calibrate ✓
+date: [ISO8601]
+tradeoffs:
+  correct: 3
+  total: 3
+expert_thinking:
+  - Knows when NOT to use Deployments
+  - Understands Deployment vs StatefulSet contexts
+  - Identified common mistakes
+
+Expert thinking demonstrated. Concept mastered.
+```
+
+**Level progression:** Calibrate passed → Level 5-7 (can explain tradeoffs, teach others, design systems)
+
+**Next:** Set spaced repetition review schedule
