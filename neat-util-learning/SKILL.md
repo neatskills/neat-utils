@@ -475,3 +475,183 @@ Expert thinking demonstrated. Concept mastered.
 **Level progression:** Calibrate passed → Level 5-7 (can explain tradeoffs, teach others, design systems)
 
 **Next:** Set spaced repetition review schedule
+
+## Spaced Repetition
+
+**Purpose:** Prevent forgetting through timed reviews
+
+See `references/spaced-repetition.md` for complete system.
+
+### Review Intervals
+
+Based on performance:
+
+| Performance | Next Interval | Reasoning |
+|-------------|---------------|-----------|
+| **Perfect (5/5)** | 2× current | Strong recall → longer gap |
+| **Good (4/5)** | 1.5× current | Solid recall → moderate increase |
+| **OK (3/5)** | Same interval | Barely remembered → don't extend |
+| **Weak (<3/5)** | ÷2 current | Forgot too much → review sooner |
+
+**Initial:** 2 days after Calibrate | **Max:** 60 days | **Min:** 1 day
+
+### Due Calculation
+
+On returning session, calculate which concepts are due:
+
+```javascript
+const now = Date.now()
+const lastActivity = new Date(concept.activity.date).getTime()
+const elapsed = now - lastActivity
+const isDue = elapsed >= concept.review_interval * 1000
+```
+
+**Present status:**
+
+```text
+Welcome back! Last session: 3 days ago
+
+📌 Due for review (2 concepts):
+- Pod (mastered, due 1 day ago)
+- Deployment (mastered, overdue 3 days ago)
+
+Want to review before continuing? [y/n/menu]
+```
+
+**Review activity:** Run Discover (5 questions), track performance, update interval
+
+## Activity Selection Logic
+
+**Decision flow:**
+
+```
+Is this a returning session?
+  YES → Calculate due reviews
+    Any due? 
+      YES → Offer review [y/n/menu]
+        [y] → Run Discover reviews
+        [n] → Continue to next activity
+        [menu] → Show full map
+      NO → Continue to next activity
+  NO → First session, build initial map
+
+Next activity for concept:
+  Level 0 → Explore (add to map)
+  Level 0 + in map → Discover (learn)
+  Level 1 + Discover done → Name (terminology)
+  Level 2 + Name done → Practice (apply)
+  Level 4 + Practice done → Calibrate (expert thinking)
+  Level 5+ + due for review → Discover (review)
+  Level 5+ + not due → Next concept or end session
+```
+
+**User navigation:**
+- User can ask to skip ahead ("Let's practice X")
+- User can repeat activities ("More discovery on Y")
+- User can add concepts mid-journey ("What's Z?")
+
+## Progress Tracking
+
+**Overall progress:**
+
+```yaml
+progress:
+  mastered: 3   # concepts at Level 5+
+  total: 8      # concepts in map
+  overall_level: 2.5  # average level across concepts
+```
+
+**Display:**
+
+```text
+📊 Kubernetes Learning Progress
+
+Foundation (3/3 mastered):
+  ✓ Pod - Level 6 (next review: 2 days)
+  ✓ Service - Level 5 (next review: tomorrow)
+  → ConfigMap - Level 3 (in Practice)
+
+Core (0/3 mastered):
+  → Deployment - Level 2 (in Name)
+  ○ StatefulSet - Level 0 (not started)
+  ○ Job - Level 0 (not started)
+
+Overall: 38% mastered (3/8 concepts)
+```
+
+## Usage Examples
+
+**Example 1: New learner**
+
+```
+User: "Teach me Kubernetes"
+
+AI: "I'll help you learn Kubernetes through discovery-based learning.
+     
+     What's your goal?
+     (Examples: deploy applications, pass CKA cert, understand fundamentals)"
+
+User: "Deploy applications"
+
+AI: "This looks like a technical topic. Is that right? [y/n]"
+
+User: "y"
+
+AI: "For deploying applications, you'll need these core concepts:
+     
+     **Foundation:**
+     - Pod - Container wrapper
+     - Service - Network access
+     
+     **Core:**
+     - Deployment - Managing replicas
+     - ConfigMap - Configuration
+     
+     Let's start with Foundation: Pod.
+     
+     Before I explain Pods, let me ask:
+     If a container crashes, what should Kubernetes do?"
+     
+[Discover activity begins]
+```
+
+**Example 2: Returning learner**
+
+```
+User: "Continue my Kubernetes learning"
+
+AI: "Welcome back! Last session: 3 days ago
+     
+     📌 Due for review (1 concept):
+     - Pod (mastered, due 1 day ago)
+     
+     Want to review before continuing? [y/n/menu]"
+
+User: "y"
+
+AI: "Let's review Pod.
+     
+     If a Pod crashes, what happens to its containers?"
+     
+[Discover review begins]
+```
+
+**Example 3: User navigation**
+
+```
+User: "What's a StatefulSet?"
+
+AI: "StatefulSet is [brief explanation - 1-2 sentences].
+     
+     Should I add StatefulSet to your map? [y/n]"
+
+User: "y"
+
+AI: "Added StatefulSet to Core section.
+     
+     Let's discover how it works.
+     
+     StatefulSet vs Deployment - what's the key difference?"
+     
+[Discover activity begins for StatefulSet]
+```
