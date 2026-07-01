@@ -1,6 +1,6 @@
 ---
 name: neat-util-estimating
-description: Use when doing story estimation with limited information - produces T-shirt size estimates (XS-XXL) accounting for technical complexity and uncertainty, with incremental saves and auto-pattern detection
+description: Use when doing story estimation with limited information - produces T-shirt size estimates (XS-XXL) accounting for technical complexity and uncertainty, with auto-pattern detection
 ---
 
 # Story Estimation
@@ -38,36 +38,61 @@ When estimating backlogs, you often receive sparse user stories and must provide
 ```
 Starting estimation for which project/product?
 Brief product context: [what is it, key domains]
+
+Please provide stories to estimate (paste one or multiple):
 ```
 
-**Create estimation document:**
+**Create estimation document structure:**
 - File: `docs/neat_util_estimating/{project-name}-{date}.md`
-- Simple format: project header + story-by-story estimates
+- Will contain: project header + all story estimates + pattern notes + optional MVP scoping
 
-### During Session
+### Input Processing
 
-**For each story user provides:**
-1. Estimate using the 5-phase process
-2. **Immediately append to markdown file** (don't wait for batch)
-3. Confirm: "Story N estimated and saved ✓"
-4. **Auto-detect patterns** (check all stories so far)
-5. When pattern emerges (3+ related stories), suggest build/buy opportunities
-6. If user accepts build/buy suggestion, update affected stories in file
-7. Continue until user indicates "done"
+**Accept flexible input formats:**
+- Single story or multiple stories in one paste
+- Numbered lists (1., 2., 3.)
+- Bullet points (-, *)
+- Simple line-separated stories
+- User story format ("As a... I want... so that...")
+- Or simple descriptions ("Add login feature")
 
-**CRITICAL:** Save after EVERY story, not at the end. Large backlogs require incremental saves.
+**Use reasoning to parse:**
+1. Read entire user input
+2. Identify story boundaries (numbers, bullets, blank lines, story patterns)
+3. Extract each distinct story
+4. Create internal story list for processing
 
-### Ending Session
+**Example parsing:**
+```
+Input:
+1. As a user, I want to reset my password
+2. Admin dashboard
+- Add email notifications
+Configure CI/CD pipeline
 
-**When user says "that's all" or "done estimating":**
-1. Summarize total stories estimated
-2. **Offer MVP scoping:** "Would you like help scoping an MVP from these estimates?"
-3. If yes, run MVP scoping workflow
-4. Save final document
+Parsed result:
+Story 1: "As a user, I want to reset my password"
+Story 2: "Admin dashboard"
+Story 3: "Add email notifications"
+Story 4: "Configure CI/CD pipeline"
+```
 
-### Pattern Detection (Automatic)
+### Estimation Process
 
-**Monitor throughout session:**
+**For the batch of stories:**
+1. Parse input into story list using reasoning
+2. Confirm parsed stories with user: "I found X stories: [list titles]. Proceed? (y/n)"
+3. If confirmed, estimate each story using 4-phase process (see below)
+4. After all estimates complete, detect patterns across stories
+5. If patterns found, offer build/buy recommendations
+6. Save complete estimation document once
+7. Offer MVP scoping
+
+**No incremental saves** - Process all stories, then save once at end.
+
+### Pattern Detection (After All Estimates)
+
+**Analyze all estimates together:**
 - **Auth stories (3+):** Suggest Auth0, Firebase, or similar
 - **Payment stories (2+):** Suggest Stripe, PayPal integration
 - **Email needs (3+):** Note shared email infrastructure
@@ -78,10 +103,18 @@ Brief product context: [what is it, key domains]
 ```
 Pattern detected: [description]
 Consider: [build/buy recommendation]
-Affected stories: [list with size adjustments]
+Affected stories: [list]
 
-Should I re-estimate affected stories with this assumption?
+This could reduce complexity/scope. Should I add pattern notes?
 ```
+
+### Ending Session
+
+**After all stories estimated:**
+1. Save complete estimation document
+2. Show summary: "Estimated X stories, saved to [filepath]"
+3. **Offer MVP scoping:** "Would you like help scoping an MVP from these estimates?"
+4. If yes, run MVP scoping workflow (see below)
 
 ## T-Shirt Size Scale
 
@@ -214,12 +247,12 @@ Could shift to S if:
 3. Identify **what info would change the estimate**
 4. Don't refuse to estimate—estimate with caveats
 
-**Incremental estimation:**
+**Batch estimation:**
 - Maintain same rigor for each story
 - Don't copy-paste reasoning
 - Monitor for patterns across stories
 - Each story deserves fresh analysis
-- Save after each story (don't batch saves)
+- Process all stories before saving
 
 ## Common Mistakes
 
@@ -233,7 +266,6 @@ Could shift to S if:
 | Hiding caveats in analysis | Put uncertainty in final estimate, not just reasoning |
 | Degrading quality over time | Last estimate should be as rigorous as first |
 | Missing pattern opportunities | Monitor across stories for build/buy chances |
-| Not saving incrementally | Save after each story, don't wait until end |
 
 ## Red Flags - STOP and Reconsider
 
@@ -451,29 +483,14 @@ Append to estimation document:
 
 ### Save Strategy
 
-**CRITICAL: Incremental saves required**
+**Save once after all estimates:**
 
-- **After each story:** Append to file immediately (use Edit tool to append)
-- **Confirmation:** Show "Story N estimated and saved ✓" after each save
-- **After pattern detection:** Update pattern notes section in file
-- **If build/buy accepted:** Update affected stories in file with revised estimates
-- **After MVP scoping:** Append MVP section to file
+- Process all stories and create complete estimation document
+- Include all story estimates in single document
+- Add pattern notes section if patterns detected
+- Save complete document once at end of estimation
+- If MVP scoping requested, append MVP section and save again
 
-**Why incremental:** Large backlogs (50+ stories) take multiple sessions. Saving only at the end risks data loss if session interrupted.
-
-**How to save:**
-```
-After estimating Story 1:
-1. Read current file
-2. Append Story 1 section
-3. Write updated content
-4. Confirm: "Story 1 estimated and saved ✓"
-
-After estimating Story 2:
-1. Read current file  
-2. Append Story 2 section
-3. Write updated content
-4. Confirm: "Story 2 estimated and saved ✓"
-
-Continue for each story...
-```
+**When to save:**
+1. After all stories estimated (initial save)
+2. After MVP scoping if requested (update save)
