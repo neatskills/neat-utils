@@ -43,7 +43,7 @@ Please provide stories to estimate (paste one or multiple):
 ```
 
 **Create estimation document structure:**
-- File: `docs/neat_util_estimating/{project-name}-{date}.md`
+- File: `docs/estimations/{project-name}-{date}.md`
 - Will contain: project header + all story estimates + pattern notes + optional MVP scoping
 
 ### Input Processing
@@ -421,7 +421,7 @@ Append to estimation document:
 
 ### Estimation Document Structure
 
-**Location:** `docs/neat_util_estimating/{project-name}-{date}.md`
+**Location:** `docs/estimations/{project-name}-{date}.md`
 
 **Format:**
 ```markdown
