@@ -136,7 +136,7 @@ This could reduce complexity/scope. Should I add pattern notes?
 Extract from the user story:
 - **Role:** Who is the user?
 - **Goal:** What do they want to accomplish?
-- **Benefit:** Why do they need it?
+- **Benefit:** Why do they need it? (if provided)
 - **Implied technical work:** What systems/components are involved?
 
 **Example:**
@@ -167,68 +167,63 @@ Evaluate **inherent difficulty** of the work:
 
 **Key:** Complexity is about **what** needs to be built, independent of team experience.
 
-### Phase 3: Assess Uncertainty
+### Phase 3: Assess Risk
 
-Evaluate **risk and unknowns**:
+**Context:** High-level estimation based on limited information means unknowns exist. The question isn't "how uncertain are we?" but rather "how likely is this story to explode in scope?"
 
-**Low uncertainty indicators:**
-- Clear requirements
-- Familiar technology
-- Well-documented APIs
-- Team has done similar work
+**Low risk indicators:**
+- Story scope is well-bounded ("add logout button")
+- Pattern is familiar and rarely has surprises
+- Clear definition of "done"
+- Minimal external dependencies
+- Team has done nearly identical work
 
-**High uncertainty indicators:**
-- Missing requirements (data volume, scale, edge cases)
-- New technology to team
-- Undocumented or changing APIs
-- Ambiguous acceptance criteria
-- External dependencies
+**High risk indicators:**
+- Vague requirements ("improve admin dashboard")
+- Words like "integrate", "migrate", "refactor" without specifics
+- New technology or unfamiliar domain
+- External dependencies (third-party APIs, other teams)
+- Edge cases likely ("handle all file types", "support all browsers")
+- Performance requirements undefined
+- Security/compliance implications
 
-**Key:** Uncertainty is about **confidence level**, which inflates size estimates.
+**Key questions:**
+- Could this be 3x bigger than it first appears?
+- Are there hidden dependencies that will surface mid-work?
+- Is "done" clearly defined or will it grow during implementation?
 
-### Phase 4: Synthesize Size
+### Phase 4: Synthesize Size & Document
 
-Combine complexity + uncertainty → T-shirt size
+Combine complexity + risk → T-shirt size
 
 **Decision framework:**
 
 ```
-High Complexity + High Uncertainty → L, XL, or XXL
-High Complexity + Low Uncertainty → M or L  
-Low Complexity + High Uncertainty → M or L
-Low Complexity + Low Uncertainty → XS, S, or M
+High Complexity + High Risk → L, XL, or XXL
+High Complexity + Low Risk → M or L  
+Low Complexity + High Risk → M or L
+Low Complexity + Low Risk → XS, S, or M
 ```
 
-**Express as range:** "**M, could be L if...**" rather than "**This is an M**"
-
-### Phase 5: Document Reasoning
-
-Provide conversational output with:
-
-1. **Recommended size** (with range)
-2. **Complexity breakdown** - What makes it hard/easy?
-3. **Uncertainty breakdown** - What's unknown/risky?
-4. **Assumptions** - What did you assume to arrive at this estimate?
-5. **Shift factors** - What information would change the estimate?
-
-**Output format:**
+**Output format (concise):**
 ```
-Estimate: M (Medium, could shift to L)
+## Story N: [Title]
 
-Complexity: [explain technical difficulty]
-Uncertainty: [explain unknowns and risks]
+**Size:** M (could be L if scope expands)
 
-Assumptions:
-- [assumption 1]
-- [assumption 2]
+**Complexity:** [2-3 sentences on technical difficulty]
 
-Could shift to L if:
-- [condition 1]
-- [condition 2]
+**Risk:** [2-3 sentences on scope expansion likelihood]
 
-Could shift to S if:
-- [condition 3]
+**Assumptions:**
+- [key assumption 1]
+- [key assumption 2]
+- [key assumption 3]
+
+**Watch for:** [1-2 specific things that would push estimate up]
 ```
+
+**Key principle:** Keep it concise. High-level estimates don't need exhaustive analysis. Focus on the factors that drive size and risk.
 
 ## Quick Reference
 
@@ -237,7 +232,7 @@ Could shift to S if:
 | Factor | Impact | Questions to Ask |
 |--------|--------|------------------|
 | **Technical Complexity** | Base size | How hard is the work itself? |
-| **Uncertainty** | Inflates size | How much is unknown? |
+| **Risk** | Inflates size | How likely is scope to explode 3x? |
 | **Scope** | Scales size | How many components affected? |
 | **Dependencies** | Adds risk | What external factors exist? |
 
@@ -259,11 +254,11 @@ Could shift to S if:
 | Mistake | Fix |
 |---------|-----|
 | Estimating time, not size | Use relative comparison ("bigger than X"), avoid hours/days |
-| Ignoring uncertainty | High uncertainty = larger size. Make it explicit. |
-| Over-precision with minimal info | Express as range: "M, could be S-L" not "This is an M" |
-| Not documenting assumptions | List every assumption—they're your escape hatches |
-| Conflating complexity with uncertainty | Separate: "technically simple but high risk due to unknowns" |
-| Hiding caveats in analysis | Put uncertainty in final estimate, not just reasoning |
+| Ignoring risk | High risk = larger size. Make it explicit. |
+| Over-precision with minimal info | Express as range: "M, could be L if scope expands" |
+| Not documenting assumptions | List key assumptions—they're your escape hatches |
+| Conflating complexity with risk | Separate: "technically simple but high explosion risk" |
+| Verbose analysis | Keep to 2-3 sentences per section. High-level = concise. |
 | Degrading quality over time | Last estimate should be as rigorous as first |
 | Missing pattern opportunities | Monitor across stories for build/buy chances |
 
@@ -273,33 +268,34 @@ These thoughts mean you're violating the principle:
 
 | Red Flag | Reality |
 |----------|---------|
-| "This is definitely a [size]" | With sparse info, there's always uncertainty. Express it. |
+| "This is definitely a [size]" | With sparse info, there's always risk. Express it. |
 | "I'll estimate 2-3 days" | That's time, not size. Use T-shirt scale. |
 | "I can't estimate without more info" | Make reasonable assumptions and caveat the estimate. |
-| "This is simple so it's Small" | Uncertainty can make simple things large. Consider both dimensions. |
-| Giving point estimate after noting many unknowns | If you listed unknowns, reflect them in estimate range. |
+| "This is simple so it's Small" | Risk can make simple things large. Consider both dimensions. |
+| Giving point estimate after noting explosion risks | If you listed risks, reflect them in estimate. |
 | Copy-pasting reasoning across stories | Each story deserves fresh analysis. |
+| Writing multi-paragraph analysis | Keep it concise: 2-3 sentences per section. |
 
-**All of these mean: Revisit your estimate and express uncertainty explicitly.**
+**All of these mean: Revisit your estimate and express risk explicitly.**
 
 ## Key Principles
 
-1. **Uncertainty inflates estimates** - When in doubt, size up and explain why
-2. **Separate complexity from uncertainty** - Simple + unknown ≠ complex
-3. **Assumptions are documentation** - Every gap you filled is an assumption
-4. **Ranges over points** - "M-L" is more honest than "M" with sparse info
-5. **Caveats in conclusion** - Don't bury them in analysis
+1. **Risk inflates estimates** - When scope explosion is likely, size up and explain why
+2. **Separate complexity from risk** - Simple + high explosion risk ≠ complex
+3. **Assumptions are documentation** - List key assumptions, not all possible ones
+4. **Express risk in size** - "M (could be L if scope expands)" not just "M"
+5. **Be concise** - High-level estimates need 2-3 sentences, not paragraphs
 
 ## Success Criteria
 
 Your estimate is complete when you've provided:
 
-- T-shirt size (XS, S, M, L, XL, XXL) with uncertainty range
-- ✅ Complexity breakdown (what makes it hard/easy)
-- ✅ Uncertainty breakdown (what's unknown/risky)
-- ✅ Explicit list of assumptions
-- ✅ Conditions that would shift the estimate up or down
-- ✅ Conversational, user-facing format
+- ✅ T-shirt size (XS, S, M, L, XL, XXL) with risk expressed
+- ✅ Complexity breakdown (2-3 sentences on technical difficulty)
+- ✅ Risk breakdown (2-3 sentences on scope explosion likelihood)
+- ✅ Key assumptions (3-5 items, not exhaustive)
+- ✅ Watch-for items (1-2 specific things that would push estimate up)
+- ✅ Concise, user-facing format
 
 ## Examples
 
@@ -307,17 +303,20 @@ Your estimate is complete when you've provided:
 
 **Story:** "As a user, I want to log out of my account"
 
-**Estimate:** **XS (Extra Small)**
+## Story 1: Logout
 
-**Complexity:** Very low—clearing session/token and redirecting to login.
+**Size:** XS
 
-**Uncertainty:** Very low—logout is a standard pattern with clear requirements.
+**Complexity:** Very low—clearing session/token and redirecting to login page. Standard pattern with established implementation.
+
+**Risk:** Very low—scope is well-bounded, pattern rarely has surprises, clear definition of done.
 
 **Assumptions:**
 - Session management already exists
 - Simple redirect to login page
+- No multi-system coordination needed
 
-**Could shift to S if:** Logout needs to cascade across multiple systems or sync with SSO provider.
+**Watch for:** SSO integration requirements would push to S.
 
 ---
 
@@ -325,29 +324,22 @@ Your estimate is complete when you've provided:
 
 **Story:** "As an admin, I want to generate monthly reports"
 
-**Estimate:** **L (Large, could be M-XL depending on scope)**
+## Story 2: Monthly Reports
 
-**Complexity:** Medium to High—depends on report complexity, data aggregation needs, and output format.
+**Size:** L (could be M or XL depending on scope)
 
-**Uncertainty:** High—"monthly reports" is vague. What data? What format? What calculations?
+**Complexity:** Medium—report generation involves data aggregation, formatting, and async processing. Complexity scales with number of report types and calculation logic required.
+
+**Risk:** High—"monthly reports" is vague and could easily expand 3x. Words like "generate reports" hide edge cases. Missing definition of what data, format, calculations, and how many report types.
 
 **Assumptions:**
-- Reports are pre-defined (not user-configurable)
+- 5-10 pre-defined report types (not user-configurable)
 - Data exists in queryable format
 - PDF or CSV output
-- ~5-10 report types
 - Async generation (background job)
+- Basic calculations only
 
-**Could shift to M if:**
-- Only 1-2 simple reports
-- Data is already aggregated
-- No complex calculations
-
-**Could shift to XL if:**
-- User-configurable report builder needed
-- Complex data transformations required
-- Real-time generation constraints
-- Heavy customization (branding, templates)
+**Watch for:** User-configurable report builder or complex data transformations would push to XL. Single simple report could drop to M.
 
 ---
 
@@ -357,30 +349,22 @@ Your estimate is complete when you've provided:
 
 **Context:** Team has not used Stripe before.
 
-**Estimate:** **L (Large)**
+## Story 3: Stripe Integration
 
-**Complexity:** Medium—Stripe is well-documented, but payment flows involve frontend + backend + webhooks.
+**Size:** L
 
-**Uncertainty:** High—team learning curve, unknown edge cases, testing requirements unclear.
+**Complexity:** Medium—payment flows involve frontend + backend + webhooks. Stripe is well-documented but requires coordinating checkout UI, server-side processing, and webhook handling for payment confirmation.
+
+**Risk:** High—words like "integrate" hide scope. Team unfamiliar with Stripe increases explosion risk. External dependency on third-party API adds unknowns. Edge cases (failed payments, webhooks, testing) not specified and could easily expand scope 3x.
 
 **Assumptions:**
 - One-time payments only (not subscriptions)
 - Using Stripe Checkout (not custom Elements UI)
 - Single currency
 - Basic error handling
+- Test mode setup sufficient
 
-**Could shift to M if:**
-- Team has payment gateway experience (just not Stripe)
-- Very simple checkout flow
-- Minimal error handling needed
-
-**Could shift to XL if:**
-- Subscriptions + one-time payments
-- Complex multi-currency logic
-- Custom UI requirements
-- Refunds/disputes handling included
-
-**Recommendation:** Consider spike story first to reduce uncertainty, then re-estimate implementation.
+**Watch for:** Subscriptions, multi-currency, custom UI, or refunds/disputes handling would push to XL. Consider spike story first.
 
 ---
 
@@ -449,14 +433,19 @@ Append to estimation document:
 ---
 
 ## Story 1: {Title}
-**Size:** {size} (with range if applicable)
-**Complexity:** {explanation}
-**Uncertainty:** {explanation}
-**Assumptions:**
-- {assumption 1}
-- {assumption 2}
 
-**Could shift to {size} if:** {conditions}
+**Size:** {size} (with risk expressed if applicable)
+
+**Complexity:** {2-3 sentences on technical difficulty}
+
+**Risk:** {2-3 sentences on scope explosion likelihood}
+
+**Assumptions:**
+- {key assumption 1}
+- {key assumption 2}
+- {key assumption 3}
+
+**Watch for:** {1-2 specific things that would push estimate up}
 
 ---
 
