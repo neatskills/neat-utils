@@ -10,6 +10,12 @@ Claude Code custom utility skills.
 - Uses worktrees for isolated testing
 - Integrates with `systematic-debugging` for deep investigation
 
+**neat-util-estimating** — Story estimation with T-shirt sizing (XS-XXL) for sparse user stories. Assesses technical complexity and risk, detects patterns for build/buy recommendations, offers MVP scoping.
+
+- Accepts batch input (numbered/bulleted lists)
+- Auto-detects patterns (auth, payment, email, search, storage)
+- Output: `docs/estimations/<project>-<date>.md`
+
 **neat-util-pdf** — Interactive PDF generator with conversational wizard. Guides through purpose, content, and style selection, then renders to PDF using Playwright.
 
 - Prerequisites: Node.js, Playwright with Chromium
@@ -37,10 +43,10 @@ Claude Code custom utility skills.
 
 ```bash
 # Install
-./scripts/install.sh debugging pdf insights lint vet
+./scripts/install.sh debugging estimating pdf insights lint vet
 
 # Uninstall
-./scripts/uninstall.sh debugging pdf insights lint vet
+./scripts/uninstall.sh debugging estimating pdf insights lint vet
 ```
 
 ## Conventions
