@@ -1,6 +1,6 @@
 ---
 name: neat-util-estimating
-description: Use when doing story estimation with limited information - produces T-shirt size estimates (XS-XXL) accounting for technical complexity and uncertainty, with auto-pattern detection
+description: Use when doing story estimation with limited information - produces T-shirt size estimates (XS-XXL) accounting for technical complexity and risk, with auto-pattern detection
 ---
 
 # Story Estimation
@@ -9,11 +9,11 @@ description: Use when doing story estimation with limited information - produces
 
 ## Overview
 
-When estimating backlogs, you often receive sparse user stories and must provide quick T-shirt size estimates (XS, S, M, L, XL, XXL). This skill guides structured estimation that accounts for technical complexity and uncertainty, making assumptions explicit and expressing estimates as ranges rather than false precision.
+When estimating backlogs, you often receive sparse user stories and must provide quick T-shirt size estimates (XS, S, M, L, XL, XXL). This skill guides structured estimation that accounts for technical complexity and risk, making assumptions explicit and expressing estimates as ranges rather than false precision.
 
 **This is solutioning, not implementation.** You assess feasibility, identify architectural patterns, recommend build/buy decisions, and size effort - but you don't write code.
 
-**Core principle:** With minimal information, uncertainty is part of the estimate. Express it explicitly rather than hiding it.
+**Core principle:** With minimal information, risk is part of the estimate. Express it explicitly rather than hiding it.
 
 ## When to Use
 
@@ -124,8 +124,8 @@ This could reduce complexity/scope. Should I add pattern notes?
 | **S** | Small | Simple CRUD, basic form, single-component feature |
 | **M** | Medium | Multi-component feature, standard integration, moderate complexity |
 | **L** | Large | Complex feature, new integration, multiple subsystems |
-| **XL** | Very Large | Major feature across systems, complex integration, high uncertainty |
-| **XXL** | Epic | Multi-team effort, architectural changes, or very high unknowns |
+| **XL** | Very Large | Major feature across systems, complex integration, high risk |
+| **XXL** | Epic | Multi-team effort, architectural changes, or very high risk |
 
 **Important:** Sizes are **relative**, not time-based. An XS for one team may differ from another.
 
@@ -238,7 +238,7 @@ Low Complexity + Low Risk → XS, S, or M
 
 **When information is missing:**
 1. Make **reasonable assumptions** (document them)
-2. Express **uncertainty in final estimate**
+2. Express **risk in final estimate**
 3. Identify **what info would change the estimate**
 4. Don't refuse to estimate—estimate with caveats
 
