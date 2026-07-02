@@ -39,14 +39,21 @@ Claude Code custom utility skills.
 - Adapts depth to idea maturity (Concept/Early/Validated) and urgency (High/Medium/Low)
 - Output: Structured business plan document
 
+**neat-util-humanizing** — Humanizes AI-generated or overly polished text. Makes writing more natural, factual, and context-appropriate through AI marker detection and style preference questions.
+
+- Session-based writing style (2 questions: Audience + Main purpose)
+- Detects 33 AI writing markers (clusters, not single instances)
+- Infers formality and tone based on audience and purpose
+- Always removes AI marker clusters as baseline
+
 ## Install / Uninstall
 
 ```bash
 # Install
-./scripts/install.sh debugging estimating pdf insights lint vet
+./scripts/install.sh debugging estimating pdf insights lint vet humanizing
 
 # Uninstall
-./scripts/uninstall.sh debugging estimating pdf insights lint vet
+./scripts/uninstall.sh debugging estimating pdf insights lint vet humanizing
 ```
 
 ## Conventions
